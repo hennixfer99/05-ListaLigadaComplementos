@@ -70,7 +70,7 @@ void menu()
 
 void inicializar()
 {
-	// se a lista j� possuir elementos
+	// se a lista já possuir elementos
 // libera a memoria ocupada
 	NO* aux = primeiro;
 	while (aux != NULL) {
@@ -131,23 +131,103 @@ void inserirElemento()
 	}
 	else
 	{
-		// procura o final da lista
 		NO* aux = primeiro;
-		while (aux->prox != NULL) {
-			aux = aux->prox;
+		//2 1
+	if(aux->valor >= novo->valor){
+		if(novo->valor < aux->valor ){
+		
+		novo->prox = aux;
+		primeiro = novo;
 		}
-		aux->prox = novo;
-	}
+		else{
+			cout << "Não pode numeros duplicados";
+		}
+		
+	}else{
+		NO* anterior = aux;
+		while(aux->prox != NULL){
+			if(aux->valor > novo->valor){
+				
+				novo->prox = aux;
+				anterior->prox = novo;
+				break;
+			}
+			else if(aux->valor == novo->valor){
+				cout << "Não pode numeros duplicados"  << endl;
+				break;
+			}
+			else{
+				anterior = aux;
+				aux = aux->prox;
+			}
+		}
+		if(novo->prox == NULL){
+			aux->prox = novo;
+		}
+	}	
+
+}
 }
 
 void excluirElemento()
 {
+	int numero;
+	cout << "Digite o elemento: ";
+	cin >> numero;
+
+	NO* aux = primeiro;
+
+	if(aux->valor == numero && aux->prox == NULL){
+
+		free(aux);
+	}
+	else if(aux->valor == numero){
+		primeiro = aux->prox;
+		free(aux);
+	}
+	else{
+		NO* anterior = aux;
+		while(aux->valor <= numero){
+			
+			if (aux->valor == numero){
+				anterior->prox = aux->prox;
+				break;
+			}
+			else{
+				anterior = aux;
+				aux = aux->prox;
+			}
+		}
+		if(aux->valor == numero){
+			free(aux);
+		}
+		else{
+			cout << "Não existe esse numero na lista" << endl;
+		}
+	}
+
 
 }
 
 void buscarElemento()
 {
-
+	int numero;
+	bool achou = false;
+	cout << "Digite um numero:";
+	cin >> numero;
+	NO* aux = primeiro;
+	
+	while (aux->valor <= numero) {
+		if(aux->valor == numero){
+			cout << "Encontrado" << endl;
+			achou = true;
+			break;
+		}else{
+		aux = aux->prox;
+		}
+	}
+	if(achou == false){
+		cout << "Numero nao encontrado" << endl;
+	}
 }
-
 
